@@ -31,5 +31,6 @@
     "@electron-forge/plugin-fuses": "^7.11.2",
     "@electron/fuses": "^1.8.0",
     "electron": "44.2.0"
-  }
+  },
+  "packageManager": "yarn@4.18.0"
 }
