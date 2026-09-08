@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>TEST ONLY</title>
 </head>
 <body>
-    <button>Enable autostart</button>
-    <button>Launch Minimized</button>
+    <button id="enable-btn">Enable autostart</button>
+    <button id="disable-btn">Disable autostart</button>
 
-    <button>Disable autostart</button>
+    <p id="status">Current Autostart status: N/A</p>
 
-    <p>Current Autostart status: N/A</p>
+    <script src="renderer.js"></script>
 </body>
 </html>

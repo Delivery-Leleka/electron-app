@@ -1,5 +1,15 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('node:path');
+import {
+  app,
+  BrowserWindow,
+  ipcMain
+} from 'electron';
+import path from 'node:path';
+
+import AutoLaunch from 'auto-launch';
+import { APP_ID, DEPLOY_URL } from './constants';
+
+app.setAppUserModelId(APP_ID)
+app.setDesktopName(APP_ID)
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -22,7 +32,7 @@ const createWindow = () => {
   // and load the index.html of the app.
   // VERY DIrty Hack!!!
   mainWindow.loadFile(path.join(__dirname, '../src/test.html'));
-  // mainWindow.loadURL("https://deliveryleleka.netlify.app")
+  // mainWindow.loadURL(DEPLOY_URL)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -54,3 +64,17 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+const autoLauncher = new AutoLaunch({ name: app.name })
+
+ipcMain.handle('autostart:flip', (_e, status: boolean) => {
+  if (process.platform == "linux") {
+    return status ? autoLauncher.enable() : autoLauncher.disable()
+  }
+  app.setLoginItemSettings({ openAtLogin: true })
+})
+
+ipcMain.handle('autostart:getStatus', () => {
+  return process.platform === 'linux'
+  ? autoLauncher.isEnabled()
+  : app.getLoginItemSettings().openAtLogin
+})
