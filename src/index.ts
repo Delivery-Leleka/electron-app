@@ -9,16 +9,20 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    // width: 800,
+    // height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+    show: false,
   });
 
+  mainWindow.maximize();
+
   // and load the index.html of the app.
-  // mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  mainWindow.loadURL("https://deliveryleleka.netlify.app")
+  // VERY DIrty Hack!!!
+  mainWindow.loadFile(path.join(__dirname, '../src/test.html'));
+  // mainWindow.loadURL("https://deliveryleleka.netlify.app")
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
